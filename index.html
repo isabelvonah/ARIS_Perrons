@@ -65,25 +65,7 @@
                 <th scope="col"> Höhenverlauf </th>
               </tr>
             </thead>
-            <tbody>
-              
-              <tr>
-                <td>Lutry</td>
-                <td>2</td>
-                <td>Aussenperron</td>
-                <td>130.89 m</td>
-                <td>P 42</td>
-                <td>konstant</td>
-              </tr>
-
-              <tr>
-                <td>Cully</td>
-                <td>1</td>
-                <td>Hausperron</td>
-                <td>171.95 m</td>
-                <td>P 20</td>
-                <td>konstant</td>
-              </tr>
+            <tbody id="exampleTable"></tbody>
 
           </table>
         </div>
@@ -107,9 +89,13 @@
 
 </div>
 
+<script>
+                
+    text = "<tr><td>Lutry</td><td>2</td><td>Aussenperron</td><td>130.89 m</td><td>P 42</td><td>konstant</td></tr><tr><td>Cully</td><td>1</td><td>Hausperron</td><td>171.95 m</td><td>P 20</td><td>konstant</td></tr>";
+    document.getElementById("exampleTable").innerHTML = text.repeat(15);
+    
+</script>
 
-
- 
       
     
 </body>
