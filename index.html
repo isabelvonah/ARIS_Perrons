@@ -42,13 +42,48 @@
     <h1> Perrons </h1>
 
     <div class="container">
-        <form class="d-flex mt-5">
-            <input class="form-control me-2" type="search" placeholder="Haltestelle Name" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit" style="color: white; border-color: red; background-color:red;">Suchen</button>
-        </form>
-    </div>
+        <div class="row">
+          <div class="col-5">
+            <h3 class="mt-5"> Suche </h3>
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Haltestelle Name" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit" style="color: white; border-color: red; background-color:red;">Suchen</button>
+            </form>
+          </div>
+          <div class="col-2"></div>
+          <div class="col-5">
+            <h3 class="mt-5">Filtern nach Perrontyp</h3>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                <label class="form-check-label" for="inlineCheckbox1">Aussenperron</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                <label class="form-check-label" for="inlineCheckbox2">Hausperron</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                <label class="form-check-label" for="inlineCheckbox2">Zwischenperron</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                <label class="form-check-label" for="inlineCheckbox2">Dienstperron</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                <label class="form-check-label" for="inlineCheckbox2">weitere</label>
+            </div>
+          </div>
+        </div>
+      </div>
 
-    <div class="row mt-5 mb-5">
+    
+    
+      <br class="mt-5">
+    
+    
+
+    <div class="row mt-5 mb-5" >
         <div class="column">
           <table class="table">
             <thead>
