@@ -28,3 +28,8 @@
     border-color: #dee2e6;
 }
 
+.form-check-input:checked {
+    background-color: #eb0000;
+    border-color: #eb0000;
+}
+
