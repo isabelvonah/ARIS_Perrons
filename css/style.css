@@ -1,0 +1,30 @@
+
+.btn-outline-success {
+    color:  #eb0000;
+    border-color:  #eb0000;
+}
+
+.btn-outline-success:hover {
+    color: #fff;
+    background-color: #eb0000;
+    border-color: #eb0000;
+}
+
+.page-link {
+    color: #eb0000;
+}
+
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #eb0000;
+    border-color: #eb0000;
+}
+
+.page-link:hover {
+    z-index: 2;
+    color: #eb0000;
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+}
+
