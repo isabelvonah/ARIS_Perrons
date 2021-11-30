@@ -1,5 +1,6 @@
 import sqlite3 as sql
 from csv import reader
+import data_clean
 
 # open sqlite connection
 con = sql.connect("data/perrons.db")
@@ -17,8 +18,8 @@ cur.execute("""
         perron_kantenhoehe TEXT,
         perron_hoehenverlauf TEXT,
         PRIMARY KEY(id AUTOINCREMENT)
-    );"""
-)
+    );
+""")
 
 # relevant colums
 haltestelle = []
@@ -40,18 +41,21 @@ with open('data/haltestelle-perronkante-inkl-bls.csv') as open_file:
         perron_kantenhoehe.append(row[8])
         perron_hoehenverlauf.append(row[11])
         
-    data = []
+data = []
     
-    # combine colums into a nested list
-    for i in range(len(haltestelle)):
-        data.append([haltestelle[i], perron_nr[i], perron_typ[i], perron_kantenlaenge[i], perron_kantenhoehe[i], perron_hoehenverlauf[i]])
+# combine colums into a nested list
+for i in range(len(haltestelle)):
+    data.append([haltestelle[i], perron_nr[i], perron_typ[i], perron_kantenlaenge[i], perron_kantenhoehe[i], perron_hoehenverlauf[i]])
 
-    # insert data into table
-    cur.executemany("""
-        INSERT INTO perronkante (haltestelle, perron_nr, perron_typ, perron_kantenlaenge, perron_kantenhoehe, perron_hoehenverlauf)
-            VALUES (?,?,?,?,?,?)
-        ;""", data)
+# insert data into table
+cur.executemany("""
+    INSERT INTO perronkante (haltestelle, perron_nr, perron_typ, perron_kantenlaenge, perron_kantenhoehe, perron_hoehenverlauf)
+        VALUES (?,?,?,?,?,?)
+    ;""", data)
 
 # close sqlite connection
 con.commit()
 con.close()
+
+# data cleaning
+data_clean.clean_kantenhoehe()
