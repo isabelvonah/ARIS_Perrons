@@ -1,43 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perrons</title>
-
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <!-- Bootstrap icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-
-    <!-- css -->
-    <link rel="stylesheet" href="css/style.css">
-</head>
-
-<body>
-
-	<!-- navbar -->
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<div class="container-fluid">
-			<a class="navbar-brand" href="#"><i class="bi bi-grid-3x2-gap-fill" style="color: red;"></i></i></a>
-			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-				<li class="nav-item">
-					<a class="nav-link active" aria-current="page" href="#">tabellarische Ansicht</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link active" href="#">Kartenansicht</a>
-				</li>
-                <li class="nav-item">
-					<a class="nav-link active" href="#">Kuchenansicht</a>
-				</li>
-			</ul>
-		</div>
-	</nav>
-
-	<!-- main content -->
-	<div class="container mt-5 mb-3">
+{% include 'header.html' %}
 
     <h1> Projektarbeit ARIS </h1>
 
@@ -142,17 +103,7 @@
 			</ul>
 		</nav>
 
-		<!-- footer -->
-		<footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-			<div class="col-md-4 d-flex align-items-center">
-				<span class="text-muted">Projektarbeit im Modul ARIS </span>
-			</div>
-			<div class="col-md-5 d-flex align-items-center">
-				<span class="text-muted">Selina Büchel, Yasaman Atighi Moghadam, Karin Mattmann, Isabel von Ah</span>
-			</div>
-		</footer>
-
-	</div>
+		{% include 'footer.html' %}
 
 	<script>
 			
