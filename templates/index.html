@@ -81,7 +81,22 @@
 						</tr>
 					</thead>
 					<!-- see js below -->
-					<tbody id="exampleTable"></tbody>
+					<tbody id="table">
+
+                        {% for perron in perrons %}
+
+                        <tr>
+                            <td scope="col">{{ perron.haltestelle }}</td>
+                            <td scope="col">{{ perron.perron_nr }}</td>
+                            <td scope="col">{{ perron.perron_typ }}</td>
+                            <td scope="col">{{ perron.perron_kantenlaenge }}</td>
+                            <td scope="col">{{ perron.perron_kantenhoehe }}</td>
+                            <td scope="col">{{ perron.perron_hoehenverlauf }}</td>
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
 				</table>
 			</div>
     </div>
@@ -105,32 +120,6 @@
 
 		{% include 'footer.html' %}
 
-	<script>
-			
-		/* two examle rows */
-		text = `
-			<tr>
-				<td>Lutry</td>
-				<td>2</td>
-				<td>Aussenperron</td>
-				<td>130.89 m</td>
-				<td>P 42 </td>
-				<td>konstant</td>
-			</tr>
-			<tr>
-				<td>Cully</td>
-				<td>1</td>
-				<td>Hausperron</td>
-				<td>171.95 m</td>
-				<td>P 20</td>
-				<td>konstant</td>
-			</tr>
-		`;
-		
-		/* insert into table */
-		document.getElementById("exampleTable").innerHTML = text.repeat(15);
-			
-	</script>
 
 </body>
 </html>
