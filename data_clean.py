@@ -1,9 +1,9 @@
 import sqlite3 as sql
 from csv import reader
 
-def clean_kantenhoehe():
+def clean_kantenhoehe(source):
     # open sqlite connection
-    con = sql.connect("data/perrons.db")
+    con = sql.connect(source)
     cur = con.cursor()
 
     # !!! values are guessed and need to be researched !!!

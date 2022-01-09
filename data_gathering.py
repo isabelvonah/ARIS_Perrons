@@ -58,4 +58,4 @@ con.commit()
 con.close()
 
 # data cleaning
-data_clean.clean_kantenhoehe()
+data_clean.clean_kantenhoehe("data/perrons.db")
