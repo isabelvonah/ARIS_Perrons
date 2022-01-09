@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template
 import sqlite3 as sql
 
+
 app = Flask(__name__)
 
 @app.route("/")
@@ -11,6 +12,15 @@ def index():
     cur = con.cursor()
 
     cur.execute("SELECT * FROM perronkante;")
+    
+    # read the searched text from the user from the url
+    searchtext = request.args.get("searchtext", "")
+
+    # execute the query with the searched text in sqlite
+    query = "SELECT * FROM perronkante WHERE haltestelle LIKE ?"
+    searchtext = '%' + searchtext + '%'
+    cur.execute(query, (searchtext,))
+    
     perrons = cur.fetchall()
 
     # close sqlite connection
