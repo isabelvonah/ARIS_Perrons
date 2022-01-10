@@ -15,6 +15,11 @@
     <!-- css -->
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
 
+    <!--leaflet-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin=""/>
+
     <!-- apexcharts.js -->
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 </head>
@@ -30,7 +35,7 @@
 					<a class="nav-link active" aria-current="page" href="{{ url_for('index') }}">tabellarische Ansicht</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link active" href="#">Kartenansicht</a>
+					<a class="nav-link active" href="{{ url_for('karte') }}">Kartenansicht</a>
 				</li>
                 <li class="nav-item">
 					<a class="nav-link active" href="{{ url_for('kuchen') }}">Kuchenansicht</a>

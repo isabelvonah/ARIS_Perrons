@@ -10,8 +10,6 @@ def index():
     con = sql.connect("data/perrons.db")
     con.row_factory = sql.Row
     cur = con.cursor()
-
-    cur.execute("SELECT * FROM perronkante;")
     
     # read the searched text from the user from the url
     searchtext = request.args.get("searchtext", "")
@@ -27,6 +25,22 @@ def index():
     con.commit()
     con.close()
     return render_template("index.html", perrons=perrons)
+
+@app.route("/karte")
+def karte():
+    # open sqlite connection
+    con = sql.connect("data/perrons.db")
+    con.row_factory = sql.Row
+    cur = con.cursor()
+
+    cur.execute("SELECT * FROM perronkante")
+    
+    perrons = cur.fetchall()
+
+    # close sqlite connection
+    con.commit()
+    con.close()
+    return render_template("karte.html", perrons=perrons)
 
 @app.route("/kuchen")
 def kuchen():

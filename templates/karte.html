@@ -1,0 +1,50 @@
+{% include 'header.html' %}
+
+    <h1> Kartenansicht </h1>
+
+    <div id="map"></div>
+    standort clipart PNG Designed By lesser31 from <a href="https://de.pngtree.com">Pngtree.com</a>
+
+    <img src="{{ url_for('static', filename='icon.png') }}" alt="" width=100% class="d-inline-block align-text-top">
+    
+    {% include 'footer.html' %}
+
+
+    <!--leaflet-->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""> </script>
+
+    <script>
+        var map = L.map('map').setView([46.8, 8.3], 8);
+    
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            maxZoom: 18,
+            id: 'mapbox/outdoors-v11',
+            tileSize: 512,
+            zoomOffset: -1,
+        }).addTo(map);
+    
+        var LeafIcon = new L.Icon({
+            iconUrl: "{{ url_for('static', filename='icon.png') }}",
+                iconSize:     [38, 38]
+
+  
+        });
+
+        // {% for perron in perrons %}
+
+
+        L.marker([46.8, 8.3], {icon: LeafIcon}).addTo(map);
+
+       // {% endfor %}
+       
+    
+    </script>
+
+    
+
+
+</body>
+</html>
