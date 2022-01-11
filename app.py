@@ -17,6 +17,9 @@ def index():
     # get the selected filters from the url 
     filter = request.args.getlist("filter")
 
+    # get the selected sorter from the url
+    sorter = request.args.get("sorter")
+
     # create a query for the selected filters
     filter_query = "SELECT * FROM perronkante WHERE "
 
@@ -24,6 +27,9 @@ def index():
         filter_query = filter_query + "perron_typ='" + element + "' OR "
 
     filter_query = filter_query[:-4] + ";"
+
+    # create a query for the selected odercoumn
+    sorter_query = "SELECT * FROM perronkante ORDER BY ?"
     
 
     # create a query for the searched text
@@ -37,6 +43,10 @@ def index():
     # execute the filter_query with the selected filters in sqlite
     if filter != []:
         cur.execute(filter_query,)
+
+    # execute the sorter_query 
+    if sorter:
+        cur.execute(sorter_query, sorter)
 
     perrons = cur.fetchall()
 
