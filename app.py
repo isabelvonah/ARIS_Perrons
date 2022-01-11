@@ -14,11 +14,30 @@ def index():
     # read the searched text from the user from the url
     searchtext = request.args.get("searchtext", "")
 
-    # execute the query with the searched text in sqlite
-    query = "SELECT * FROM perronkante WHERE haltestelle LIKE ?"
-    searchtext = '%' + searchtext + '%'
-    cur.execute(query, (searchtext,))
+    # get the selected filters from the url 
+    filter = request.args.getlist("filter")
+
+    # create a query for the selected filters
+    filter_query = "SELECT * FROM perronkante WHERE "
+
+    for element in filter:
+        filter_query = filter_query + "perron_typ='" + element + "' OR "
+
+    filter_query = filter_query[:-4] + ";"
     
+
+    # create a query for the searched text
+    search_query = "SELECT * FROM perronkante WHERE haltestelle LIKE ?"
+    searchtext = '%' + searchtext + '%'
+
+    # execute the search_query with the searched text in sqlite
+    if searchtext:
+        cur.execute(search_query, (searchtext,))
+
+    # execute the filter_query with the selected filters in sqlite
+    if filter != []:
+        cur.execute(filter_query,)
+
     perrons = cur.fetchall()
 
     # close sqlite connection
