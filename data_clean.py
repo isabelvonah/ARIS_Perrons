@@ -8,7 +8,7 @@ def clean_kantenhoehe(source):
 
     # !!! values are guessed and need to be researched !!!
 
-    # change 'P..' to meters
+    # change 'P..' in perron_kantenhoehe to meters
     cur.execute("""
         UPDATE perronkante SET perron_kantenhoehe ='0.42'
             WHERE perron_kantenhoehe='P 42';
@@ -57,6 +57,17 @@ def clean_kantenhoehe(source):
     cur.execute("""
         ALTER TABLE perronkante
             RENAME COLUMN perron_kantenhoehe_new TO perron_kantenhoehe;
+    """)
+
+    # change empty entries in perron_hoehenverlauf to "unbekannt"
+    cur.execute("""
+        UPDATE perronkante SET perron_hoehenverlauf = 'unbekannt'
+            WHERE perron_hoehenverlauf ='';
+    """)
+
+    cur.execute("""
+        UPDATE perronkante SET perron_hoehenverlauf = 'unbekannt'
+            WHERE perron_hoehenverlauf ='Andere';
     """)
 
     # close sqlite connection

@@ -61,10 +61,10 @@
             }
         };
         
-        
+
         var options_col = {
           series: [{
-          data: [634, 582, 594, 561, 465, 136, 291, 92, 121, 25, 9,].reverse()
+          data: [ {% for kategorie in laengen %} '{{kategorie}}', {% endfor %} ]
         }],
           chart: {
           height: 350,
@@ -86,7 +86,7 @@
           bar: {
             columnWidth: '45%',
             distributed: true,
-            horizontal: true
+            horizontal: false
           }
         },
         dataLabels: {
@@ -96,19 +96,7 @@
           show: false
         },
         xaxis: {
-          categories: [
-            '< 50 m',
-            '50 - 100 m',
-            '100 - 150 m',
-            '150 - 200 m',
-            '200 - 250 m',
-            '250 - 300 m',
-            '300 - 350 m',
-            '350 - 400 m',
-            '400 - 450 m',
-            '450 - 500 m',
-            '> 500 m'
-          ].reverse(),
+          categories: [ {% for kategorie in kategorien %} '{{kategorie}}', {% endfor %} ],
           labels: {
             style: {
               
@@ -120,12 +108,12 @@
 
 
         var options_hv = {...options_pie};
-        options_hv.series = [2864, 186, 103, 292, 68];
-        options_hv.labels = ["konstant", "nicht konstant", "auslaufend", "Karrenüberfahrten", "unbekannt"];
+        options_hv.series = [ {% for kategorie in hoehenverlauf %} {{kategorie.count}}, {% endfor %} ];
+        options_hv.labels = [ {% for kategorie in hoehenverlauf %} '{{kategorie.perron_hoehenverlauf}}', {% endfor %} ];
 
         var options_kh = {...options_pie};
-        options_kh.series = [1666, 114, 491, 268, 306, 343, 325];
-        options_kh.labels = ["0.55 m", "0.42 m", "0.35 m", "0.3 m", "0.25 m", "0.2 m", "unbekannt"];
+        options_kh.series = [ {% for kategorie in kantenhoehe %} {{kategorie.count}}, {% endfor %} ];
+        options_kh.labels = [ {% for kategorie in kantenhoehe %} '{{kategorie.perron_kantenhoehe}}', {% endfor %} ];
 
         var options_pl = {...options_col};
 
