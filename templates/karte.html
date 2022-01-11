@@ -33,12 +33,12 @@
   
         });
 
-        // {% for perron in perrons %}
+        {% for perron in perrons %}
 
 
-        L.marker([46.8, 8.3], {icon: LeafIcon}).addTo(map);
+        L.marker([ {{perron.koord}} ], {icon: LeafIcon}).addTo(map);
 
-       // {% endfor %}
+       {% endfor %}
        
     
     </script>
