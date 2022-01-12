@@ -25,18 +25,15 @@
             tileSize: 512,
             zoomOffset: -1,
         }).addTo(map);
-    
-        var LeafIcon = new L.Icon({
-            iconUrl: "{{ url_for('static', filename='icon.png') }}",
-                iconSize:     [38, 38]
-
-  
-        });
 
         {% for perron in perrons %}
 
-
-        L.marker([ {{perron.koord}} ], {icon: LeafIcon}).addTo(map);
+        L.circle([ {{perron.koord}} ], {
+            color: 'red',
+            fillColor: '#f03',
+            fillOpacity: 0.5,
+            radius: 50
+        }).addTo(map);
 
        {% endfor %}
        
