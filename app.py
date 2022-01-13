@@ -61,34 +61,38 @@ def karte():
     con.row_factory = sql.Row
     cur = con.cursor()
 
-    cur.execute("SELECT * FROM perronkante")
-    
+    # select the whole database and write it into perrons
+    cur.execute("SELECT * FROM perronkante") 
     perrons = cur.fetchall()
 
     # close sqlite connection
     con.commit()
     con.close()
+
     return render_template("karte.html", perrons=perrons)
 
-@app.route("/kuchen")
-def kuchen():
+@app.route("/diagramme")
+def diagramme():
     # open sqlite connection
     con = sql.connect("data/perrons.db")
     con.row_factory = sql.Row
     cur = con.cursor()
 
+    # select and count the different attributes of "hoehenverlauf" for the first chart
     cur.execute("""
         SELECT perron_hoehenverlauf, count(id) AS count FROM perronkante 
             GROUP BY perron_hoehenverlauf ORDER BY COUNT(id) DESC;
     """)
     hoehenverlauf = cur.fetchall()
 
+    # select and count the different attributes of "kantenhoehe" for the second chart
     cur.execute("""
         SELECT perron_kantenhoehe, count(id) AS count FROM perronkante 
-            GROUP BY perron_kantenhoehe ORDER BY perron_kantenhoehe DESC;
+            GROUP BY perron_kantenhoehe ORDER BY perron_kantenhoehe ASC;
     """)
     kantenhoehe = cur.fetchall()
 
+    # prepared dictionary for counting the categories of "kantenlaengen"
     kantenlaengen_kat  = {
         'unter 50 m': 0,
         '50 - 100 m': 0,
@@ -103,6 +107,7 @@ def kuchen():
         'über 500 m': 0
     }
 
+    # count "kantenlaengen" and add them to the prepared dictionary
     for row in cur.execute("SELECT perron_kantenlaenge FROM perronkante;"):
         if row[0] < 50: kantenlaengen_kat['unter 50 m'] += 1
         elif row[0] < 100 and row[0] >= 50: kantenlaengen_kat['50 - 100 m'] += 1
@@ -116,7 +121,7 @@ def kuchen():
         elif row[0] < 500 and row[0] >= 450: kantenlaengen_kat['450 - 500 m'] += 1
         elif row[0] > 500: kantenlaengen_kat['über 500 m'] += 1
         
-    
+    # prepare lists to genarate the chart with
     kategorien = list(kantenlaengen_kat.keys())
     laengen = list(kantenlaengen_kat.values())
 
@@ -125,6 +130,6 @@ def kuchen():
     con.commit()
     con.close()
 
-    return render_template("kuchen.html", hoehenverlauf=hoehenverlauf, kantenhoehe=kantenhoehe, kategorien=kategorien, laengen=laengen)
+    return render_template("diagramme.html", hoehenverlauf=hoehenverlauf, kantenhoehe=kantenhoehe, kategorien=kategorien, laengen=laengen)
 
 app.run(debug=True)

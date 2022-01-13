@@ -3,6 +3,7 @@
         <h1> Kuchenansicht </h1>
 
         <div class="container mt-5">
+            <!-- pie charts -->
             <div class="row">
                 <div class="col">
                     <h3> Höhenverlauf der Perrons </h3>
@@ -19,6 +20,8 @@
                     <div id="chart_kh"></div>
                 </div>
             </div>
+
+            <!-- bar chart -->
             <div class="row mt-5">
                 <div class="row">
                     <h3> Perronlängen </h3>
@@ -31,16 +34,13 @@
 
         {% include 'footer.html' %}
 
-	
-
 	<script>
-			
+        //pie chart options template
         var options_pie = {
             series: [],
             chart: {
                 width: '70%',
                 type: 'pie',
-                fontFamily: 'Helvetica, Arial, sans-serif'
             },
             labels: [],
             theme: {
@@ -61,52 +61,47 @@
             }
         };
         
-
+        // bar chart options template
         var options_col = {
-          series: [{
-          data: [ {% for kategorie in laengen %} '{{kategorie}}', {% endfor %} ]
-        }],
-          chart: {
-          height: 350,
-          type: 'bar',
-          events: {
-            click: function(chart, w, e) {
-              // console.log(chart, w, e)
-            }
-          }
-        },
-        theme: {
-                monochrome: {
-                    enabled: true,
-                    color: '#eb0000'
+            series: [],
+            chart: {
+            height: 350,
+            type: 'bar',
+            events: {
+                click: function(chart, w, e) {
                 }
-        },
-        
-        plotOptions: {
-          bar: {
-            columnWidth: '45%',
-            distributed: true,
-            horizontal: false
-          }
-        },
-        dataLabels: {
-          enabled: false
-        },
-        legend: {
-          show: false
-        },
-        xaxis: {
-          categories: [ {% for kategorie in kategorien %} '{{kategorie}}', {% endfor %} ],
-          labels: {
-            style: {
-              
-              fontSize: '12px'
             }
-          }
-        }
+            },
+            theme: {
+                    monochrome: {
+                        enabled: true,
+                        color: '#eb0000'
+                    }
+            },
+            plotOptions: {
+            bar: {
+                columnWidth: '45%',
+                distributed: true,
+                horizontal: false
+            }
+            },
+            dataLabels: {
+            enabled: false
+            },
+            legend: {
+            show: false
+            },
+            xaxis: {
+            categories: [],
+            labels: {
+                style: {
+                fontSize: '12px'
+                }
+            }
+            }
         };
 
-
+        // copy option templates (by value) and fill in the data of the database
         var options_hv = {...options_pie};
         options_hv.series = [ {% for kategorie in hoehenverlauf %} {{kategorie.count}}, {% endfor %} ];
         options_hv.labels = [ {% for kategorie in hoehenverlauf %} '{{kategorie.perron_hoehenverlauf}}', {% endfor %} ];
@@ -116,7 +111,12 @@
         options_kh.labels = [ {% for kategorie in kantenhoehe %} '{{kategorie.perron_kantenhoehe}}', {% endfor %} ];
 
         var options_pl = {...options_col};
+        options_pl.series = [{
+          data: [ {% for kategorie in laengen %} '{{kategorie}}', {% endfor %} ]
+        }];
+        options_pl.xaxis.categories = [ {% for kategorie in kategorien %} '{{kategorie}}', {% endfor %} ];
 
+        // add charts to id's with according options
         var chart_hv = new ApexCharts(document.querySelector("#chart_hv"), options_hv);
         var chart_kh = new ApexCharts(document.querySelector("#chart_kh"), options_kh);
         var chart_pl = new ApexCharts(document.querySelector("#chart_pl"), options_pl);
@@ -124,8 +124,7 @@
         chart_hv.render();
         chart_kh.render();
         chart_pl.render();
-        
-
+    
 	</script>
 
 </body>

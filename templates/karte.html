@@ -2,10 +2,8 @@
 
     <h1> Kartenansicht </h1>
 
+    <!-- Karte -->
     <div id="map"></div>
-    standort clipart PNG Designed By lesser31 from <a href="https://de.pngtree.com">Pngtree.com</a>
-
-    <img src="{{ url_for('static', filename='icon.png') }}" alt="" width=100% class="d-inline-block align-text-top">
     
     {% include 'footer.html' %}
 
@@ -16,8 +14,10 @@
     crossorigin=""> </script>
 
     <script>
+        // sets view to Switzerland
         var map = L.map('map').setView([46.8, 8.3], 8);
-    
+        
+        // defines map
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
             maxZoom: 18,
@@ -25,7 +25,8 @@
             tileSize: 512,
             zoomOffset: -1,
         }).addTo(map);
-
+        
+        // adds circles for every "perronkante"
         {% for perron in perrons %}
 
         L.circle([ {{perron.koord}} ], {
