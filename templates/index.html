@@ -9,8 +9,8 @@
             <!-- search -->
             <div class="col">
                 <h3 class="mt-5 mb-3"> Suche </h3>
-                <form action="/" class="d-flex">
-                        <input class="form-control me-2" type="text" name="searchtext" placeholder="Haltestellen-Name" aria-label="Search">
+                <form action="" class="d-flex">
+                        <input class="form-control me-2" type="text" name="searchtext" placeholder="Haltestellen-Name" value="{{searchtext}}" aria-label="Search">
                         <input class="btn btn-outline-success" type="submit" value="Suchen">
                 </form>
             </div>
@@ -24,29 +24,29 @@
                 <h3 class="mt-5 mb-3"> Filtern nach Perrontyp</h3>
                 <div class="row">
                     <div class="col">
-                        <form>
+                        <form action="">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="filter" value="Aussenperron">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="filter" value="Aussenperron" {% if 'Aussenperron' is in filter %} checked {% endif %}>
                             <label class="form-check-label" for="inlineCheckbox1">Aussenperron</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" name="filter" value="Hausperron">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" name="filter" value="Hausperron" {% if 'Hausperron' is in filter %} checked {% endif %}>
                             <label class="form-check-label" for="inlineCheckbox2">Hausperron</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" name="filter" value="Zwischenperron">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" name="filter" value="Zwischenperron" {% if 'Zwischenperron' is in filter %} checked {% endif %}>
                             <label class="form-check-label" for="inlineCheckbox2">Zwischenperron</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" name="filter" value="Dienstperron">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" name="filter" value="Dienstperron" {% if 'Dienstperron' is in filter %} checked {% endif %}>
                             <label class="form-check-label" for="inlineCheckbox2">Dienstperron</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" name="filter" type="checkbox" id="inlineCheckbox2" value="Mittelperron">
+                            <input class="form-check-input" name="filter" type="checkbox" id="inlineCheckbox2" value="Mittelperron" {% if 'Mittelperron' is in filter %} checked {% endif %}>
                             <label class="form-check-label" for="inlineCheckbox2">Mittelperron</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" name="filter" type="checkbox" id="inlineCheckbox2" value="Hilfskante">
+                            <input class="form-check-input" name="filter" type="checkbox" id="inlineCheckbox2" value="Hilfskante" {% if 'Hilfskante' is in filter %} checked {% endif %}>
                             <label class="form-check-label" for="inlineCheckbox2">Hilfskante</label>
                         </div>
                     </div>
@@ -73,16 +73,43 @@
         </div>
 
         <div class="row">
-            <form>
-                    <div class="col">
-                    <button class="btn btn-outline-success" name="sorter" value="haltestelle" type="submit">Haltestellen A-Z</button>
-                    </div>
-                    <div class="col">
-                    <input class="btn btn-outline-success" name="sorter" value="perron_kantenlaenge" type="submit">
-                    </div>
-            </form>
+            <div class="col">
+                <a class="nav-link active" href="{{ url_for('index') }}">
+            <button class="btn btn-outline-success">
+                 
+                Haltestellen A-Z
+            
+            </button>
+            </a>
+            </div>
+            <div class="col">
+                <a class="nav-link active" href="{{ url_for('za') }}">
+            <button class="btn btn-outline-success">
+                
+                Haltestellen Z-A 
+                
+            </button>
+            </a>
+            </div>
+            <div class="col">
+                <a class="nav-link active" href="{{ url_for('zahlgk') }}">
+            <button class="btn btn-outline-success">
+                    Perronkantenlänge gr - kl
+            </button>
+            </a>
+            </div>
+            <div class="col">
+            <a class="nav-link active" href="{{ url_for('zahlkg') }}">
+            <button class="btn btn-outline-success">
+                 Perronkantenlänge kl - gr
+        
+            </button>
+        </a>
+            </div>
         </div>
     </div>
+
+
     
 		<!-- table -->
     <div class="row mt-5 mb-5" >
@@ -90,16 +117,10 @@
 				<table class="table">
 					<thead>
 						<tr>
-							<th scope="col">
-								<i class="bi bi-arrow-up" name="auflist" value="halt" style="color: grey;"></i>
-								Haltestellen Name
-							</th>
+							<th scope="col"> Haltestellen Nam </th>
 							<th scope="col"> Perron Nr. </th>
 							<th scope="col"> Perrontyp </th>
-							<th scope="col">
-								<i class="bi bi-arrow-down" name="auflist" value="lang" style="color: red;"></i>
-								Perronkantenlänge
-							</th>
+							<th scope="col"> Perronkantenlänge</th>
 							<th scope="col"> Perronkantenhöhe </th>
 							<th scope="col"> Höhenverlauf </th>
 						</tr>

@@ -4,8 +4,7 @@ import sqlite3 as sql
 
 app = Flask(__name__)
 
-@app.route("/")
-def index():
+def table(sorter_query):
     # open sqlite connection
     con = sql.connect("data/perrons.db")
     con.row_factory = sql.Row
@@ -17,22 +16,16 @@ def index():
     # get the selected filters from the url 
     filter = request.args.getlist("filter")
 
-    # get the selected sorter from the url
-    sorter = request.args.get("sorter")
-
     # create a query for the selected filters
     filter_query = "SELECT * FROM perronkante WHERE "
 
     for element in filter:
         filter_query = filter_query + "perron_typ='" + element + "' OR "
 
-    filter_query = filter_query[:-4] + ";"
-
-    # create a query for the selected odercoumn
-    sorter_query = "SELECT * FROM perronkante ORDER BY ?"
+    filter_query = filter_query[:-4] + sorter_query
 
     # create a query for the searched text
-    search_query = "SELECT * FROM perronkante WHERE haltestelle LIKE ?"
+    search_query = "SELECT * FROM perronkante WHERE haltestelle LIKE ?" + sorter_query
     searchtext = '%' + searchtext + '%'
 
     # execute the search_query with the searched text in sqlite
@@ -43,16 +36,62 @@ def index():
     if filter != []:
         cur.execute(filter_query,)
 
-    # execute the sorter_query 
-    if sorter:
-        cur.execute(sorter_query, sorter)
-
     perrons = cur.fetchall()
 
     # close sqlite connection
     con.commit()
     con.close()
-    return render_template("index.html", perrons=perrons)
+    return perrons
+
+
+@app.route("/")
+def index():
+
+    # create a query for the selected odercoumn
+    sorter_query = "ORDER BY haltestelle;"
+
+    filter = request.args.getlist("filter")
+    searchtext = request.args.get("searchtext", "")
+
+    perrons = table(sorter_query)
+    return render_template("index.html", perrons=perrons, filter = filter, searchtext = searchtext)
+
+@app.route("/za")
+def za():
+
+    # create a query for the selected odercoumn
+    sorter_query = "ORDER BY haltestelle DESC;"
+
+    filter = request.args.getlist("filter")
+    searchtext = request.args.get("searchtext", "")
+
+    perrons = table(sorter_query)
+    return render_template("index.html", perrons=perrons, filter = filter, searchtext = searchtext)
+
+@app.route("/zahlkg")
+def zahlkg():
+
+    # create a query for the selected odercoumn
+    sorter_query = "ORDER BY perron_kantenlaenge;"
+
+    filter = request.args.getlist("filter")
+    searchtext = request.args.get("searchtext", "")
+
+    perrons = table(sorter_query)
+    return render_template("index.html", perrons=perrons, filter = filter, searchtext = searchtext)
+
+@app.route("/zahlgk")
+def zahlgk():
+
+    # create a query for the selected odercoumn
+    sorter_query = "ORDER BY perron_kantenlaenge DESC;"
+
+    filter = request.args.getlist("filter")
+    searchtext = request.args.get("searchtext", "")
+
+    perrons = table(sorter_query)
+    return render_template("index.html", perrons=perrons, filter = filter, searchtext = searchtext)
+
 
 @app.route("/karte")
 def karte():
