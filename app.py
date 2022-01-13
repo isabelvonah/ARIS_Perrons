@@ -30,7 +30,6 @@ def index():
 
     # create a query for the selected odercoumn
     sorter_query = "SELECT * FROM perronkante ORDER BY ?"
-    
 
     # create a query for the searched text
     search_query = "SELECT * FROM perronkante WHERE haltestelle LIKE ?"
