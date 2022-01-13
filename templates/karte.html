@@ -26,7 +26,7 @@
             zoomOffset: -1,
         }).addTo(map);
         
-        // adds circles for every "perronkante"
+        // adds circles and add a popup for every "perronkante"
         {% for perron in perrons %}
 
         L.circle([ {{perron.koord}} ], {

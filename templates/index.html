@@ -10,9 +10,9 @@
             <div class="col">
                 <h3 class="mt-5 mb-3"> Suche </h3>
                 <form action="" class="d-flex">
+                        <!-- jinja statement references previously entered searchtext -->
                         <input class="form-control me-2" type="text" name="searchtext" placeholder="Haltestellen-Name" value="{{searchtext}}" aria-label="Search">
                         <input class="btn btn-outline-success" type="submit" value="Suchen">
-                </form>
             </div>
             
 
@@ -24,8 +24,8 @@
                 <h3 class="mt-5 mb-3"> Filtern nach Perrontyp</h3>
                 <div class="row">
                     <div class="col">
-                        <form action="">
                         <div class="form-check form-check-inline">
+                            <!-- jinja statement references chosen filters -->
                             <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="filter" value="Aussenperron" {% if 'Aussenperron' is in filter %} checked {% endif %}>
                             <label class="form-check-label" for="inlineCheckbox1">Aussenperron</label>
                         </div>
@@ -74,37 +74,33 @@
 
         <div class="row">
             <div class="col">
+                <!-- every button leads to different route and the chosen button gets highlighted -->
                 <a class="nav-link active" href="{{ url_for('index') }}">
-            <button class="btn btn-outline-success">
-                 
-                Haltestellen A-Z
-            
-            </button>
-            </a>
+                    <button class="btn btn-outline-success {% if sort_option == 'index' %} button-highlight {% endif %}">
+                        Haltestellen A-Z
+                    </button>
+                </a>
             </div>
             <div class="col">
                 <a class="nav-link active" href="{{ url_for('za') }}">
-            <button class="btn btn-outline-success">
-                
-                Haltestellen Z-A 
-                
-            </button>
-            </a>
+                    <button class="btn btn-outline-success {% if sort_option == 'za' %} button-highlight {% endif %}">
+                        Haltestellen Z-A 
+                    </button>
+                </a>
             </div>
             <div class="col">
                 <a class="nav-link active" href="{{ url_for('zahlgk') }}">
-            <button class="btn btn-outline-success">
-                    Perronkantenlänge gr - kl
-            </button>
-            </a>
+                    <button class="btn btn-outline-success {% if sort_option == 'zahlgk' %} button-highlight {% endif %}">
+                            Perronkantenlänge gr - kl
+                    </button>
+                </a>
             </div>
             <div class="col">
-            <a class="nav-link active" href="{{ url_for('zahlkg') }}">
-            <button class="btn btn-outline-success">
-                 Perronkantenlänge kl - gr
-        
-            </button>
-        </a>
+                <a class="nav-link active" href="{{ url_for('zahlkg') }}">
+                    <button class="btn btn-outline-success {% if sort_option == 'zahlkg' %} button-highlight {% endif %}">
+                        Perronkantenlänge kl - gr
+                    </button>
+                </a>
             </div>
         </div>
     </div>
@@ -125,7 +121,6 @@
 							<th scope="col"> Höhenverlauf </th>
 						</tr>
 					</thead>
-					<!-- see js below -->
 					<tbody id="table">
 
                         {% for perron in perrons %}

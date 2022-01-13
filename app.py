@@ -4,6 +4,8 @@ import sqlite3 as sql
 
 app = Flask(__name__)
 
+# function to be used in different routes
+# parameter: for every sort option exists a diffrent route 
 def table(sorter_query):
     # open sqlite connection
     con = sql.connect("data/perrons.db")
@@ -13,84 +15,91 @@ def table(sorter_query):
     # read the searched text from the user from the url
     searchtext = request.args.get("searchtext", "")
 
+    # create a query for the searched text
+    search_query = "SELECT * FROM perronkante WHERE haltestelle LIKE ?"
+    searchtext = '%' + searchtext + '%'
+
     # get the selected filters from the url 
     filter = request.args.getlist("filter")
 
-    # create a query for the selected filters
-    filter_query = "SELECT * FROM perronkante WHERE "
-
+    filter_query = ""
+    # connect filter elements with "OR"
     for element in filter:
         filter_query = filter_query + "perron_typ='" + element + "' OR "
+    # delete last "OR"
+    filter_query = filter_query[:-4]
 
-    filter_query = filter_query[:-4] + sorter_query
+    # combine all queries and execute in sqlite
+    if filter == []:
+        cur.execute(search_query + sorter_query, (searchtext,))
+    else:
+        cur.execute(search_query + " AND (" + filter_query + ") " + sorter_query, (searchtext, ))
 
-    # create a query for the searched text
-    search_query = "SELECT * FROM perronkante WHERE haltestelle LIKE ?" + sorter_query
-    searchtext = '%' + searchtext + '%'
-
-    # execute the search_query with the searched text in sqlite
-    if searchtext:
-        cur.execute(search_query, (searchtext,))
-
-    # execute the filter_query with the selected filters in sqlite
-    if filter != []:
-        cur.execute(filter_query,)
-
+    #write result into variable
     perrons = cur.fetchall()
 
     # close sqlite connection
     con.commit()
     con.close()
+
     return perrons
 
 
 @app.route("/")
 def index():
 
-    # create a query for the selected odercoumn
+    # prepare addition to query
     sorter_query = "ORDER BY haltestelle;"
 
+    # define parameters to remain filters, searchtext and show sort option when reloading a the index.html page
     filter = request.args.getlist("filter")
     searchtext = request.args.get("searchtext", "")
+    sort_option = 'index'
 
     perrons = table(sorter_query)
-    return render_template("index.html", perrons=perrons, filter = filter, searchtext = searchtext)
+    return render_template("index.html", perrons=perrons, filter = filter, searchtext = searchtext, sort_option=sort_option)
 
 @app.route("/za")
 def za():
 
-    # create a query for the selected odercoumn
+    # prepare addition to query
     sorter_query = "ORDER BY haltestelle DESC;"
 
+    # define parameters to remain filters, searchtext and show sort option when reloading a the index.html page
     filter = request.args.getlist("filter")
     searchtext = request.args.get("searchtext", "")
+    sort_option = 'za'
 
     perrons = table(sorter_query)
-    return render_template("index.html", perrons=perrons, filter = filter, searchtext = searchtext)
+    return render_template("index.html", perrons=perrons, filter = filter, searchtext = searchtext, sort_option=sort_option)
 
 @app.route("/zahlkg")
 def zahlkg():
 
-    # create a query for the selected odercoumn
+    # prepare addition to query
     sorter_query = "ORDER BY perron_kantenlaenge;"
 
+    # define parameters to remain filters, searchtext and show sort option when reloading a the index.html page
     filter = request.args.getlist("filter")
     searchtext = request.args.get("searchtext", "")
+    sort_option = 'zahlkg'
 
     perrons = table(sorter_query)
-    return render_template("index.html", perrons=perrons, filter = filter, searchtext = searchtext)
+    return render_template("index.html", perrons=perrons, filter = filter, searchtext = searchtext, sort_option=sort_option)
 
 @app.route("/zahlgk")
 def zahlgk():
 
-    # create a query for the selected odercoumn
+    # prepare addition to query
     sorter_query = "ORDER BY perron_kantenlaenge DESC;"
 
+    # define parameters to remain filters, searchtext and show sort option when reloading a the index.html page
     filter = request.args.getlist("filter")
     searchtext = request.args.get("searchtext", "")
+    sort_option = 'zahlgk'
 
     perrons = table(sorter_query)
-    return render_template("index.html", perrons=perrons, filter = filter, searchtext = searchtext)
+    return render_template("index.html", perrons=perrons, filter = filter, searchtext = searchtext, sort_option=sort_option)
 
 
 @app.route("/karte")
@@ -109,6 +118,7 @@ def karte():
     con.close()
 
     return render_template("karte.html", perrons=perrons)
+
 
 @app.route("/diagramme")
 def diagramme():
@@ -131,7 +141,7 @@ def diagramme():
     """)
     kantenhoehe = cur.fetchall()
 
-    # prepared dictionary for counting the categories of "kantenlaengen"
+    # prepare dictionary for counting the categories of "kantenlaengen"
     kantenlaengen_kat  = {
         'unter 50 m': 0,
         '50 - 100 m': 0,

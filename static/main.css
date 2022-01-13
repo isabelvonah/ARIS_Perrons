@@ -1,8 +1,13 @@
 
+.button-highlight {
+    border-width: 3px;
+}
+
 .btn-outline-success {
     color:  #eb0000;
     border-color:  #eb0000;
 }
+    
 
 .btn-outline-success:hover {
     color: #fff;

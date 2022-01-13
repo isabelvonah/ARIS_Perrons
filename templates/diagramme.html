@@ -102,6 +102,7 @@
         };
 
         // copy option templates (by value) and fill in the data of the database
+        // the prepared python lists hohenverlauf, kantenhoehe and kategorien can be filled into series and lables using jinja
         var options_hv = {...options_pie};
         options_hv.series = [ {% for kategorie in hoehenverlauf %} {{kategorie.count}}, {% endfor %} ];
         options_hv.labels = [ {% for kategorie in hoehenverlauf %} '{{kategorie.perron_hoehenverlauf}}', {% endfor %} ];
