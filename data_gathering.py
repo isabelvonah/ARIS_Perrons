@@ -43,14 +43,15 @@ with open('data/haltestelle-perronkante-inkl-bls.csv') as open_file:
         perron_kantenhoehe.append(row[8])
         perron_hoehenverlauf.append(row[11])
         koord.append(row[19])
-        
+
+# prepared list to transfer with the data        
 data = []
     
 # combine colums into a nested list
 for i in range(len(haltestelle)):
     data.append([haltestelle[i], perron_nr[i], perron_typ[i], perron_kantenlaenge[i], perron_kantenhoehe[i], perron_hoehenverlauf[i], koord[i]])
 
-# insert data into table
+# insert data into database table
 cur.executemany("""
     INSERT INTO perronkante (haltestelle, perron_nr, perron_typ, perron_kantenlaenge, perron_kantenhoehe, perron_hoehenverlauf, koord)
         VALUES (?,?,?,?,?,?,?)
@@ -62,3 +63,4 @@ con.close()
 
 # data cleaning
 data_clean.clean_kantenhoehe("data/perrons.db")
+data_clean.clean_hoehenverlauf("data/perrons.db")
