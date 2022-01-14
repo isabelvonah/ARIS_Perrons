@@ -30,8 +30,8 @@
         {% for perron in perrons %}
 
         L.circle([ {{perron.koord}} ], {
-            color: 'red',
-            fillColor: '#f03',
+            color: '#eb0000',
+            fillColor: '#eb0000',
             fillOpacity: 0.5,
             radius: 20
         }).addTo(map).bindPopup( '<b>{{perron.haltestelle}} Gleis {{perron.perron_nr}}</b><br>Kantenlänge: {{perron.perron_kantenlaenge}} m' );
